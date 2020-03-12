@@ -1,0 +1,60 @@
+//
+//  RequestDecoder.cpp
+//  NRPE++
+//
+//  Created by Massimiliano Ziccardi on 12/03/2020.
+//  Copyright © 2020 ziccardi. All rights reserved.
+//
+
+#include <iostream>
+#include <arpa/inet.h>
+#include "RequestDecoder.hpp"
+#include "protocol.hpp"
+#include "v2/V2PacketDecoder.hpp"
+#include "v3/V3PacketDecoder.hpp"
+
+void RequestDecoder::decode() {
+    boost::asio::streambuf buf;
+    
+    common_packet packet;
+    
+    boost::asio::read(_socket, boost::asio::buffer(&packet, sizeof(packet) - 2));
+    
+    // fix byte order
+    packet.packet_version = ntohs(packet.packet_version);
+    packet.packet_type = ntohs(packet.packet_type);
+    packet.result_code = ntohs(packet.result_code);
+    packet.crc32_value = ntohl(packet.crc32_value);
+
+    // Dump what has been read
+    char *buff = (char*) &packet;
+    for (int i = 0; i < sizeof(packet) - 2; i++) {
+        std::cout << (int) buff[i] << " ";
+    }
+    std::cout << std::endl;
+    
+    
+    std::cout << packet.packet_version << std::endl;
+    std::cout << packet.packet_type << std::endl;
+    std::cout << packet.result_code << std::endl;
+    
+    
+    
+    switch (packet.packet_version) {
+        case 2: {
+            V2PacketDecoder dec(_socket);
+            dec.decode(&packet);
+            break;
+        }
+        case 4:
+        case 3: {
+            V3PacketDecoder dec(_socket);
+            dec.decode(&packet);
+            break;
+        }
+        default:
+            break;
+    }
+    
+    std::cout << "Buffer read" << std::endl;
+}
