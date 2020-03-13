@@ -9,30 +9,23 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include "RequestDecoder.hpp"
-#include "protocol.hpp"
 #include "decoders/v2/V2PacketDecoder.hpp"
 #include "decoders/v3/V3PacketDecoder.hpp"
 
 Packet* RequestDecoder::decode() {
     boost::asio::streambuf buf;
     
-    common_packet packet;
-    
-    boost::asio::read(_socket, boost::asio::buffer(&packet, sizeof(packet) - 2));
-    
-    // fix byte order
-    packet.packet_version = ntohs(packet.packet_version);
-    packet.packet_type = ntohs(packet.packet_type);
-    packet.result_code = ntohs(packet.result_code);
-    packet.crc32_value = ntohl(packet.crc32_value);
-    
-    switch (packet.packet_version) {
+    int16_t version;
+
+    boost::asio::read(_socket, boost::asio::buffer(&version, sizeof(version)));
+
+    switch (ntohs(version)) {
         case 2: {
-            return V2PacketDecoder(_socket).decode(&packet);
+            return V2PacketDecoder(_socket).decode();
         }
         case 4:
         case 3: {
-            return V3PacketDecoder(_socket).decode(&packet);
+            return V3PacketDecoder(_socket).decode();
         }
         default:
             break;

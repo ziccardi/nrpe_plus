@@ -13,25 +13,15 @@
 
 #include <cstdint>
 #include <boost/asio.hpp>
-#include "../../protocol.hpp"
 #include "../../protocol/Packet.hpp"
+#include "../AbstractPacketDecoder.hpp"
+
 using boost::asio::ip::tcp;
 
-typedef struct _v2_packet {
-    int16_t      packet_version;
-    int16_t      packet_type;
-    u_int32_t    crc32_value;
-    int16_t      result_code;
-    std::shared_ptr<char>   buffer;
-    std::shared_ptr<char>   padding;
-} v2_packet;
-
-class V2PacketDecoder {
-private:
-    tcp::socket& _socket;
+class V2PacketDecoder : public AbstractPacketDecoder {
 public:
-    V2PacketDecoder(tcp::socket& socket) : _socket(socket) {}
-    Packet* decode(common_packet *pkt);
+    V2PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
+    Packet* decodePacket();
 };
 
 #endif /* V2PacketDecoder_hpp */

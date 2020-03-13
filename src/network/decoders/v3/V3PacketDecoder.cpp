@@ -10,25 +10,22 @@
 #include "V3PacketDecoder.hpp"
 #include "../../protocol/v3/NRPEV3Request.hpp"
 
-Packet* V3PacketDecoder::decode(common_packet *pkt) {
-    v3_packet packet;
-    memcpy(&packet, pkt, sizeof(common_packet));
-    
+Packet* V3PacketDecoder::decodePacket() {
     // read alignment and buffer_length
-    boost::asio::read(_socket, boost::asio::buffer(&packet.alignment, sizeof(packet.alignment)));
-    boost::asio::read(_socket, boost::asio::buffer(&packet.buffer_length, sizeof(packet.buffer_length)));
+    boost::asio::read(getSocket(), boost::asio::buffer(&this->alignment, sizeof(this->alignment)));
+    boost::asio::read(getSocket(), boost::asio::buffer(&this->bufferLength, sizeof(this->bufferLength)));
     
-    packet.alignment = ntohs(packet.alignment);
-    packet.buffer_length = ntohl(packet.buffer_length);
+    this->alignment = ntohs(this->alignment);
+    this->bufferLength = ntohl(this->bufferLength);
     
-    packet.buffer = std::shared_ptr<char>(new char[packet.buffer_length]);
+    this->buffer = std::shared_ptr<char>(new char[this->bufferLength]);
 
-    boost::asio::read(_socket, boost::asio::buffer(packet.buffer.get(), packet.buffer_length));
+    boost::asio::read(getSocket(), boost::asio::buffer(this->buffer.get(), this->bufferLength));
 
-    packet.padding_length = 1020 - packet.buffer_length;
-    packet.padding = std::shared_ptr<char>(new char[packet.padding_length]);
+    this->paddingLength = 1020 - this->bufferLength;
+    this->padding = std::shared_ptr<char>(new char[this->paddingLength]);
 
-    boost::asio::read(_socket, boost::asio::buffer(packet.padding.get(), packet.padding_length));
+    boost::asio::read(getSocket(), boost::asio::buffer(this->padding.get(), this->paddingLength));
 
-    return new NRPEV3Request(packet.crc32_value, packet.alignment, packet.buffer, packet.buffer_length, packet.padding, packet.padding_length);
+    return new NRPEV3Request(this->crc32, this->alignment, this->buffer, this->bufferLength, this->padding, this->paddingLength);
 }
