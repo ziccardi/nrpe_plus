@@ -11,6 +11,7 @@
 #include "network/RequestDecoder.hpp"
 #include "network/protocol/Packet.hpp"
 #include "network/protocol/v2/NRPEV2Response.hpp"
+#include "network/protocol/v3/NRPEV3Response.hpp"
 #include "network/ResponseEncoder.hpp"
 
 using boost::asio::ip::tcp;
@@ -33,10 +34,22 @@ void ServiceHandler::handle() {
 
     // TODO: here we should execute the command and receive the result to return...
 
-    // TODO: Response version depends on the request version
-    NRPEV2Response res(0, "Hello World");
+    std::unique_ptr<Packet> res;
 
-    ResponseEncoder(_socket).encode(&res);
+    switch(pkt->getVersion()) {
+        case 2:
+            res = std::unique_ptr<Packet>(new NRPEV2Response(0, "Hello World V2"));
+            break;
+        case 3:
+            res = std::unique_ptr<Packet>(new NRPEV3Response(0, "Hello World V3"));
+            break;
+        default:
+            // Unsupported version
+            break;
+    }
+
+
+    ResponseEncoder(_socket).encode(res.get());
 
 //    boost::asio::async_write(_socket, boost::asio::buffer(msg),
 //                             boost::bind(&ServiceHandler::handle_write, shared_from_this(),
