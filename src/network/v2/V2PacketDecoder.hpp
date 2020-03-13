@@ -14,7 +14,7 @@
 #include <cstdint>
 #include <boost/asio.hpp>
 #include "../protocol.hpp"
-
+#include "../protocol/Packet.hpp"
 using boost::asio::ip::tcp;
 
 typedef struct _v2_packet {
@@ -31,7 +31,7 @@ private:
     tcp::socket& _socket;
 public:
     V2PacketDecoder(tcp::socket& socket) : _socket(socket) {}
-    void decode(common_packet *pkt);
+    Packet* decode(common_packet *pkt);
 };
 
 #endif /* V2PacketDecoder_hpp */

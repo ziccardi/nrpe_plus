@@ -4,4 +4,5 @@ bin_PROGRAMS = nrpe++
 nrpe___SOURCES = main.cpp ServerHandler.cpp ServerListener.cpp network/RequestDecoder.cpp \
 	network/v2/V2PacketDecoder.cpp network/v3/V3PacketDecoder.cpp \
 	network/protocol/Packet.cpp \
-	network/protocol/v2/NRPEV2AbstractPacket.cpp network/protocol/v2/NRPEV2Request.cpp
+	network/protocol/v2/NRPEV2AbstractPacket.cpp network/protocol/v2/NRPEV2Request.cpp \
+	network/protocol/v3/NRPEV3AbstractPacket.cpp network/protocol/v2/NRPEV3Request.hpp

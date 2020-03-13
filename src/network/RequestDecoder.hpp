@@ -11,6 +11,7 @@
 #define MAX_PACKETBUFFER_LENGTH 1024
 
 #include <boost/asio.hpp>
+#include "protocol/Packet.hpp"
 using boost::asio::ip::tcp;
 
 class RequestDecoder {
@@ -20,7 +21,7 @@ public:
     explicit RequestDecoder(tcp::socket& socket) : _socket(socket) {
     }
     
-    void decode();
+    Packet* decode();
 };
 
 #endif /* RequestDecoder_hpp */

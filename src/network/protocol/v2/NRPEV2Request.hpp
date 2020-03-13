@@ -11,6 +11,7 @@ class NRPEV2Request : public NRPEV2AbstractPacket {
 public:
     NRPEV2Request(u_int32_t crc32, int16_t resultCode, std::shared_ptr<char> buffer, std::shared_ptr<char> padding)
         : NRPEV2AbstractPacket(1, crc32, resultCode, buffer, padding) {}
+    virtual ~NRPEV2Request() {}
 };
 
 

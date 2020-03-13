@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <boost/asio.hpp>
 #include "../protocol.hpp"
+#include "../protocol/Packet.hpp"
 
 using boost::asio::ip::tcp;
 
@@ -22,7 +23,9 @@ typedef struct _v3_packet{
     int16_t   result_code;
     int16_t   alignment;
     int32_t   buffer_length;
-    std::string     buffer;
+    int16_t   padding_length;
+    std::shared_ptr<char>   buffer;
+    std::shared_ptr<char>   padding;
 } v3_packet;
 
 class V3PacketDecoder {
@@ -30,7 +33,7 @@ private:
     tcp::socket& _socket;
 public:
     V3PacketDecoder(tcp::socket& socket) : _socket(socket) {}
-    void decode(common_packet *pkt);
+    Packet* decode(common_packet *pkt);
 };
 
 

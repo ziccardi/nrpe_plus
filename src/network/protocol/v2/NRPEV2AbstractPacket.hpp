@@ -12,10 +12,11 @@
 class NRPEV2AbstractPacket : public Packet {
 public:
     NRPEV2AbstractPacket(int16_t type, u_int32_t crc32, int16_t resultCode, std::shared_ptr<char> buffer, std::shared_ptr<char> padding)
-        : Packet(2, type, crc32, resultCode, 0, buffer, padding)
+        : Packet(2, type, crc32, resultCode, 0, buffer, MAX_PACKETBUFFER_LENGTH, padding, 2)
     {}
+    virtual ~NRPEV2AbstractPacket() {}
 protected:
-    u_int32_t crc32() const override;
+    virtual u_int32_t crc32() const;
 };
 
 

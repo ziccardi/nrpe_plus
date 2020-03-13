@@ -8,12 +8,11 @@
 
 #include <iostream>
 #include "V3PacketDecoder.hpp"
+#include "../protocol/v3/NRPEV3Request.hpp"
 
-void V3PacketDecoder::decode(common_packet *pkt) {
+Packet* V3PacketDecoder::decode(common_packet *pkt) {
     v3_packet packet;
     memcpy(&packet, pkt, sizeof(common_packet));
-    
-    std::cout << "Buffer length: " << packet.buffer_length << std::endl;
     
     // read alignment and buffer_length
     boost::asio::read(_socket, boost::asio::buffer(&packet.alignment, sizeof(packet.alignment)));
@@ -22,17 +21,23 @@ void V3PacketDecoder::decode(common_packet *pkt) {
     packet.alignment = ntohs(packet.alignment);
     packet.buffer_length = ntohl(packet.buffer_length);
     
-    std::unique_ptr<char> buf(new char[packet.buffer_length]);
+    packet.buffer = std::shared_ptr<char>(new char[packet.buffer_length]);
+
+    boost::asio::read(_socket, boost::asio::buffer(packet.buffer.get(), packet.buffer_length));
+
+    packet.padding_length = 1020 - packet.buffer_length;
+    packet.padding = std::shared_ptr<char>(new char[packet.padding_length]);
+
+    boost::asio::read(_socket, boost::asio::buffer(packet.padding.get(), packet.padding_length));
+
+    return new NRPEV3Request(packet.crc32_value, packet.alignment, packet.buffer, packet.buffer_length, packet.padding, packet.padding_length);
+
+    //std::cout << std::endl;
     
-    boost::asio::read(_socket, boost::asio::buffer(buf.get(), packet.buffer_length));
-    
-    packet.buffer = std::string(buf.get());
-    
-    std::cout << std::endl;
-    
-    
-    std::cout << "Alignment: " << packet.alignment << std::endl;
-    std::cout << "Buffer length: " << packet.buffer_length << std::endl;
-    std::cout << "sa: " << sizeof(packet.buffer_length) << std::endl;
-    std::cout << "Buffer: " << packet.buffer << std::endl;
+
+
+//    std::cout << "Alignment: " << packet.alignment << std::endl;
+//    std::cout << "Buffer length: " << packet.buffer_length << std::endl;
+//    std::cout << "sa: " << sizeof(packet.buffer_length) << std::endl;
+//    std::cout << "Buffer: " << packet.buffer << std::endl;
 }

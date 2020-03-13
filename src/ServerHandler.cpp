@@ -6,11 +6,12 @@
 //  Copyright © 2020 ziccardi. All rights reserved.
 //
 
+#include <iostream>
 #include <boost/bind.hpp>
 #include "ServerHandler.hpp"
 #include "network/RequestDecoder.hpp"
+#include "network/protocol/Packet.hpp"
 
-#include <iostream>
 
 using boost::asio::ip::tcp;
 
@@ -24,11 +25,12 @@ ServiceHandler::ServiceHandler(boost::asio::io_context& io_context) : _socket(io
 void ServiceHandler::handle() {
     std::string msg("Hello world");
     RequestDecoder decoder(_socket);
-    decoder.decode();
-    
+    std::unique_ptr<Packet> pkt(decoder.decode());
+    std::cout << pkt->getCommand() << std::endl;
+    std::cout << "Valid: " << pkt->validateCRC() << std::endl;
+
     std::cout << "Writing response" << std::endl;
-//    boost::asio::write(_socket, boost::asio::buffer(msg));
-    
+
     boost::asio::async_write(_socket, boost::asio::buffer(msg),
                              boost::bind(&ServiceHandler::handle_write, shared_from_this(),
                                          boost::asio::placeholders::error,

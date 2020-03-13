@@ -13,7 +13,7 @@
 #include "v2/V2PacketDecoder.hpp"
 #include "v3/V3PacketDecoder.hpp"
 
-void RequestDecoder::decode() {
+Packet* RequestDecoder::decode() {
     boost::asio::streambuf buf;
     
     common_packet packet;
@@ -28,15 +28,11 @@ void RequestDecoder::decode() {
     
     switch (packet.packet_version) {
         case 2: {
-            V2PacketDecoder dec(_socket);
-            dec.decode(&packet);
-            break;
+            return V2PacketDecoder(_socket).decode(&packet);
         }
         case 4:
         case 3: {
-            V3PacketDecoder dec(_socket);
-            dec.decode(&packet);
-            break;
+            return V3PacketDecoder(_socket).decode(&packet);
         }
         default:
             break;

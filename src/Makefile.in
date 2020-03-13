@@ -105,7 +105,8 @@ am_nrpe___OBJECTS = main.$(OBJEXT) ServerHandler.$(OBJEXT) \
 	network/v3/V3PacketDecoder.$(OBJEXT) \
 	network/protocol/Packet.$(OBJEXT) \
 	network/protocol/v2/NRPEV2AbstractPacket.$(OBJEXT) \
-	network/protocol/v2/NRPEV2Request.$(OBJEXT)
+	network/protocol/v2/NRPEV2Request.$(OBJEXT) \
+	network/protocol/v3/NRPEV3AbstractPacket.$(OBJEXT)
 nrpe___OBJECTS = $(am_nrpe___OBJECTS)
 nrpe___LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -129,6 +130,7 @@ am__depfiles_remade = ./$(DEPDIR)/ServerHandler.Po \
 	network/protocol/$(DEPDIR)/Packet.Po \
 	network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po \
 	network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po \
+	network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po \
 	network/v2/$(DEPDIR)/V2PacketDecoder.Po \
 	network/v3/$(DEPDIR)/V3PacketDecoder.Po
 am__mv = mv -f
@@ -145,6 +147,18 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC      " $@;
+am__v_CC_1 = 
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD    " $@;
+am__v_CCLD_1 = 
 SOURCES = $(nrpe___SOURCES)
 DIST_SOURCES = $(nrpe___SOURCES)
 am__can_run_installinfo = \
@@ -270,7 +284,8 @@ AUTOMAKE_OPTIONS = subdir-objects
 nrpe___SOURCES = main.cpp ServerHandler.cpp ServerListener.cpp network/RequestDecoder.cpp \
 	network/v2/V2PacketDecoder.cpp network/v3/V3PacketDecoder.cpp \
 	network/protocol/Packet.cpp \
-	network/protocol/v2/NRPEV2AbstractPacket.cpp network/protocol/v2/NRPEV2Request.cpp
+	network/protocol/v2/NRPEV2AbstractPacket.cpp network/protocol/v2/NRPEV2Request.cpp \
+	network/protocol/v3/NRPEV3AbstractPacket.cpp network/protocol/v2/NRPEV3Request.hpp
 
 all: all-am
 
@@ -391,6 +406,15 @@ network/protocol/v2/NRPEV2AbstractPacket.$(OBJEXT):  \
 network/protocol/v2/NRPEV2Request.$(OBJEXT):  \
 	network/protocol/v2/$(am__dirstamp) \
 	network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
+network/protocol/v3/$(am__dirstamp):
+	@$(MKDIR_P) network/protocol/v3
+	@: > network/protocol/v3/$(am__dirstamp)
+network/protocol/v3/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) network/protocol/v3/$(DEPDIR)
+	@: > network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
+network/protocol/v3/NRPEV3AbstractPacket.$(OBJEXT):  \
+	network/protocol/v3/$(am__dirstamp) \
+	network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
 
 nrpe++$(EXEEXT): $(nrpe___OBJECTS) $(nrpe___DEPENDENCIES) $(EXTRA_nrpe___DEPENDENCIES) 
 	@rm -f nrpe++$(EXEEXT)
@@ -401,6 +425,7 @@ mostlyclean-compile:
 	-rm -f network/*.$(OBJEXT)
 	-rm -f network/protocol/*.$(OBJEXT)
 	-rm -f network/protocol/v2/*.$(OBJEXT)
+	-rm -f network/protocol/v3/*.$(OBJEXT)
 	-rm -f network/v2/*.$(OBJEXT)
 	-rm -f network/v3/*.$(OBJEXT)
 
@@ -414,6 +439,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@network/protocol/$(DEPDIR)/Packet.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/v2/$(DEPDIR)/V2PacketDecoder.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/v3/$(DEPDIR)/V3PacketDecoder.Po@am__quote@ # am--include-marker
 
@@ -563,6 +589,8 @@ distclean-generic:
 	-rm -f network/protocol/$(am__dirstamp)
 	-rm -f network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
 	-rm -f network/protocol/v2/$(am__dirstamp)
+	-rm -f network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
+	-rm -f network/protocol/v3/$(am__dirstamp)
 	-rm -f network/v2/$(DEPDIR)/$(am__dirstamp)
 	-rm -f network/v2/$(am__dirstamp)
 	-rm -f network/v3/$(DEPDIR)/$(am__dirstamp)
@@ -583,6 +611,7 @@ distclean: distclean-am
 	-rm -f network/protocol/$(DEPDIR)/Packet.Po
 	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po
 	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po
+	-rm -f network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po
 	-rm -f network/v2/$(DEPDIR)/V2PacketDecoder.Po
 	-rm -f network/v3/$(DEPDIR)/V3PacketDecoder.Po
 	-rm -f Makefile
@@ -637,6 +666,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f network/protocol/$(DEPDIR)/Packet.Po
 	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po
 	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po
+	-rm -f network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po
 	-rm -f network/v2/$(DEPDIR)/V2PacketDecoder.Po
 	-rm -f network/v3/$(DEPDIR)/V3PacketDecoder.Po
 	-rm -f Makefile
