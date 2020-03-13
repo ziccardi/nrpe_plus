@@ -13,8 +13,8 @@
 
 #include <cstdint>
 #include <boost/asio.hpp>
-#include "../protocol.hpp"
-#include "../protocol/Packet.hpp"
+#include "../../protocol.hpp"
+#include "../../protocol/Packet.hpp"
 using boost::asio::ip::tcp;
 
 typedef struct _v2_packet {

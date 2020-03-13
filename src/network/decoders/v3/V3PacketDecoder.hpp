@@ -9,10 +9,10 @@
 #ifndef V3PacketDecoder_hpp
 #define V3PacketDecoder_hpp
 
-#include <stdint.h>
+#include <cstdint>
 #include <boost/asio.hpp>
-#include "../protocol.hpp"
-#include "../protocol/Packet.hpp"
+#include "../../protocol.hpp"
+#include "../../protocol/Packet.hpp"
 
 using boost::asio::ip::tcp;
 

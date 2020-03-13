@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "V3PacketDecoder.hpp"
-#include "../protocol/v3/NRPEV3Request.hpp"
+#include "../../protocol/v3/NRPEV3Request.hpp"
 
 Packet* V3PacketDecoder::decode(common_packet *pkt) {
     v3_packet packet;
@@ -31,13 +31,4 @@ Packet* V3PacketDecoder::decode(common_packet *pkt) {
     boost::asio::read(_socket, boost::asio::buffer(packet.padding.get(), packet.padding_length));
 
     return new NRPEV3Request(packet.crc32_value, packet.alignment, packet.buffer, packet.buffer_length, packet.padding, packet.padding_length);
-
-    //std::cout << std::endl;
-    
-
-
-//    std::cout << "Alignment: " << packet.alignment << std::endl;
-//    std::cout << "Buffer length: " << packet.buffer_length << std::endl;
-//    std::cout << "sa: " << sizeof(packet.buffer_length) << std::endl;
-//    std::cout << "Buffer: " << packet.buffer << std::endl;
 }

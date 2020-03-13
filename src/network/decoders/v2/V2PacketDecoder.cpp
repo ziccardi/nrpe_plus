@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include "V2PacketDecoder.hpp"
-#include "../protocol/v2/NRPEV2Request.hpp"
+#include "../../protocol/v2/NRPEV2Request.hpp"
 
 Packet* V2PacketDecoder::decode(common_packet *pkt) {
     v2_packet packet;

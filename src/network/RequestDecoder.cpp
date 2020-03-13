@@ -10,8 +10,8 @@
 #include <arpa/inet.h>
 #include "RequestDecoder.hpp"
 #include "protocol.hpp"
-#include "v2/V2PacketDecoder.hpp"
-#include "v3/V3PacketDecoder.hpp"
+#include "decoders/v2/V2PacketDecoder.hpp"
+#include "decoders/v3/V3PacketDecoder.hpp"
 
 Packet* RequestDecoder::decode() {
     boost::asio::streambuf buf;
