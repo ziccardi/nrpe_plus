@@ -15,8 +15,7 @@ public:
                   u_int32_t bufferLength,
                   std::shared_ptr<char> padding,
                   int16_t paddingLength)
-            : NRPEV3AbstractPacket(1, crc32, 0, alignment, buffer, bufferLength, padding, paddingLength)
-    {}
+            : NRPEV3AbstractPacket(1, crc32, 0, alignment, buffer, bufferLength, padding, paddingLength){}
 };
 
 #endif //NRPE_NRPEV3REQUEST_HPP

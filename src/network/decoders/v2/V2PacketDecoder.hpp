@@ -21,7 +21,8 @@ using boost::asio::ip::tcp;
 class V2PacketDecoder : public AbstractPacketDecoder {
 public:
     V2PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
-    Packet* decodePacket();
+    void loadPacketFromNetwork();
+    Packet* buildPacket();
 };
 
 #endif /* V2PacketDecoder_hpp */

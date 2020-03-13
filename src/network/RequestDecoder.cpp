@@ -11,6 +11,7 @@
 #include "RequestDecoder.hpp"
 #include "decoders/v2/V2PacketDecoder.hpp"
 #include "decoders/v3/V3PacketDecoder.hpp"
+#include "decoders/v4/V4PacketDecoder.hpp"
 
 Packet* RequestDecoder::decode() {
     boost::asio::streambuf buf;
@@ -23,9 +24,11 @@ Packet* RequestDecoder::decode() {
         case 2: {
             return V2PacketDecoder(_socket).decode();
         }
-        case 4:
         case 3: {
             return V3PacketDecoder(_socket).decode();
+        }
+        case 4: {
+            return V4PacketDecoder(_socket).decode();
         }
         default:
             break;

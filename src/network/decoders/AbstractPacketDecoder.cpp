@@ -13,5 +13,7 @@ Packet * AbstractPacketDecoder::decode() {
     this->crc32 = ntohl(this->crc32);
     this->resultCode = ntohs(this->resultCode);
 
-    return decodePacket();
+    this->loadPacketFromNetwork();
+
+    return this->buildPacket();
 }

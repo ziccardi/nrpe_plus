@@ -12,6 +12,7 @@
 #include "network/protocol/Packet.hpp"
 #include "network/protocol/v2/NRPEV2Response.hpp"
 #include "network/protocol/v3/NRPEV3Response.hpp"
+#include "network/protocol/v4/NRPEV4Response.hpp"
 #include "network/ResponseEncoder.hpp"
 
 using boost::asio::ip::tcp;
@@ -42,6 +43,9 @@ void ServiceHandler::handle() {
             break;
         case 3:
             res = std::unique_ptr<Packet>(new NRPEV3Response(0, "Hello World V3"));
+            break;
+        case 4:
+            res = std::unique_ptr<Packet>(new NRPEV4Response(0, "Hello World V4"));
             break;
         default:
             // Unsupported version

@@ -19,7 +19,8 @@ using boost::asio::ip::tcp;
 class V3PacketDecoder : public AbstractPacketDecoder {
 public:
     V3PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
-    Packet* decodePacket();
+    void loadPacketFromNetwork();
+    Packet* buildPacket();
 };
 
 

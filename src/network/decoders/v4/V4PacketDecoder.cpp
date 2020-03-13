@@ -1,23 +1,20 @@
 //
-//  V3PacketDecoder.cpp
-//  NRPE++
-//
-//  Created by Massimiliano Ziccardi on 12/03/2020.
-//  Copyright © 2020 ziccardi. All rights reserved.
+// Created by Massimiliano Ziccardi on 13/03/2020.
 //
 
 #include <iostream>
-#include "V3PacketDecoder.hpp"
-#include "../../protocol/v3/NRPEV3Request.hpp"
+#include "V4PacketDecoder.hpp"
+#include "../../protocol/v4/NRPEV4Request.hpp"
 
-void V3PacketDecoder::loadPacketFromNetwork() {
+
+void V4PacketDecoder::loadPacketFromNetwork() {
     // read alignment and buffer_length
     boost::asio::read(getSocket(), boost::asio::buffer(&this->alignment, sizeof(this->alignment)));
     boost::asio::read(getSocket(), boost::asio::buffer(&this->bufferLength, sizeof(this->bufferLength)));
-    
+
     this->alignment = ntohs(this->alignment);
     this->bufferLength = ntohl(this->bufferLength);
-    
+
     this->buffer = std::shared_ptr<char>(new char[this->bufferLength]);
 
     boost::asio::read(getSocket(), boost::asio::buffer(this->buffer.get(), this->bufferLength));
@@ -28,8 +25,8 @@ void V3PacketDecoder::loadPacketFromNetwork() {
     boost::asio::read(getSocket(), boost::asio::buffer(this->padding.get(), this->paddingLength));
 }
 
-Packet * V3PacketDecoder::buildPacket() {
-    return new NRPEV3Request(
+Packet * V4PacketDecoder::buildPacket() {
+    return new NRPEV4Request(
             this->crc32,
             this->alignment,
             this->buffer,

@@ -19,7 +19,7 @@ public:
 
 private:
     static char* messageToBuffer(std::string msg) {
-        char* buf = new char[msg.length()]();
+        char* buf = new char[msg.length() + 1]();
         memcpy(buf, msg.data(), msg.length());
         return buf;
     }

@@ -24,7 +24,8 @@ protected:
     u_int32_t paddingLength;
 protected:
     tcp::socket& getSocket() { return _socket; }
-    virtual Packet* decodePacket() = 0;
+    virtual void loadPacketFromNetwork() = 0;
+    virtual Packet* buildPacket() = 0;
 public:
     AbstractPacketDecoder(tcp::socket& socket) : _socket(socket) {}
     Packet* decode();
