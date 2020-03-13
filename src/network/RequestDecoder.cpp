@@ -25,20 +25,6 @@ void RequestDecoder::decode() {
     packet.packet_type = ntohs(packet.packet_type);
     packet.result_code = ntohs(packet.result_code);
     packet.crc32_value = ntohl(packet.crc32_value);
-
-    // Dump what has been read
-    char *buff = (char*) &packet;
-    for (int i = 0; i < sizeof(packet) - 2; i++) {
-        std::cout << (int) buff[i] << " ";
-    }
-    std::cout << std::endl;
-    
-    
-    std::cout << packet.packet_version << std::endl;
-    std::cout << packet.packet_type << std::endl;
-    std::cout << packet.result_code << std::endl;
-    
-    
     
     switch (packet.packet_version) {
         case 2: {

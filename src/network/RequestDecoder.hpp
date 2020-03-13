@@ -17,7 +17,7 @@ class RequestDecoder {
 private:
     tcp::socket& _socket;
 public:
-    RequestDecoder(tcp::socket& socket) : _socket(socket) {
+    explicit RequestDecoder(tcp::socket& socket) : _socket(socket) {
     }
     
     void decode();

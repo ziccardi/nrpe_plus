@@ -11,7 +11,7 @@
 
 #define MAX_PACKETBUFFER_LENGTH 1024
 
-#include <stdint.h>
+#include <cstdint>
 #include <boost/asio.hpp>
 #include "../protocol.hpp"
 
@@ -22,7 +22,8 @@ typedef struct _v2_packet {
     int16_t      packet_type;
     u_int32_t    crc32_value;
     int16_t      result_code;
-    char        buffer[MAX_PACKETBUFFER_LENGTH];
+    std::shared_ptr<char>   buffer;
+    std::shared_ptr<char>   padding;
 } v2_packet;
 
 class V2PacketDecoder {

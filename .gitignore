@@ -36,3 +36,4 @@ config.*
 .*
 autom4te.cache
 **/Makefile
+cmake-build-debug/

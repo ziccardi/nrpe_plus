@@ -8,10 +8,18 @@
 
 #include <iostream>
 #include "V2PacketDecoder.hpp"
+#include "../protocol/v2/NRPEV2Request.hpp"
 
 void V2PacketDecoder::decode(common_packet *pkt) {
     v2_packet packet;
+    packet.buffer = std::shared_ptr<char>(new char[MAX_PACKETBUFFER_LENGTH]);
     memcpy(&packet, pkt, sizeof(common_packet));
-    boost::asio::read(_socket, boost::asio::buffer(packet.buffer, sizeof(packet.buffer)));
-    std::cout << "Buffer: " << packet.buffer << std::endl;
+    boost::asio::read(_socket, boost::asio::buffer(packet.buffer.get(), MAX_PACKETBUFFER_LENGTH));
+
+    packet.padding = std::shared_ptr<char>(new char[2]);
+    boost::asio::read(_socket, boost::asio::buffer(packet.padding.get(), 2));
+
+    NRPEV2Request req(packet.crc32_value, packet.result_code, packet.buffer, packet.padding);
+    std::cout << "Command: " << req.getCommand() << std::endl;
+    std::cout << "Valid: " << (req.validateCRC() ? "true" : "false") << std::endl;
 }
