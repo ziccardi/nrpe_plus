@@ -15,11 +15,10 @@ set(SOURCE_FILES
         src/network/protocol/v2/NRPEV2AbstractPacket.cpp
         src/network/protocol/v2/NRPEV2AbstractPacket.hpp
         src/network/protocol/Packet.hpp
-        src/network/protocol/v2/NRPEV2Request.cpp
         src/network/protocol/v2/NRPEV2Request.hpp
         src/network/protocol/v3/NRPEV3AbstractPacket.cpp
         src/network/protocol/v3/NRPEV3AbstractPacket.hpp
-        src/network/protocol/v3/NRPEV3Request.hpp)
+        src/network/protocol/v3/NRPEV3Request.hpp src/network/protocol/v2/NRPEV2Response.cpp src/network/protocol/v2/NRPEV2Response.hpp src/network/encoders/v2/V2PacketEncoder.cpp src/network/encoders/v2/V2PacketEncoder.hpp src/network/ResponseEncoder.cpp src/network/ResponseEncoder.hpp)
 
 # Add executable target with source files listed in SOURCE_FILES variable
 add_executable(nrpe++ ${SOURCE_FILES})
