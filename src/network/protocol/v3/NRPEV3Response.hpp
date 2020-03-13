@@ -10,7 +10,7 @@
 class NRPEV3Response : public NRPEV3AbstractPacket {
 public:
     NRPEV3Response(int16_t resultCode, std::string message)
-            : NRPEV3AbstractPacket(2, 0, resultCode, 0, std::shared_ptr<char>(messageToBuffer(message)), message.length(), std::shared_ptr<char>(new char[3]{0,0,0}), 3) {
+            : NRPEV3AbstractPacket(2, 0, resultCode, 0, std::shared_ptr<char>(messageToBuffer(message)), message.length(), std::shared_ptr<char>(new char[3]()), 3) {
         updateCRC();
     }
 

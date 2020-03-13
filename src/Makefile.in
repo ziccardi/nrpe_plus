@@ -101,11 +101,13 @@ PROGRAMS = $(bin_PROGRAMS)
 am__dirstamp = $(am__leading_dot)dirstamp
 am_nrpe___OBJECTS = main.$(OBJEXT) ServerHandler.$(OBJEXT) \
 	ServerListener.$(OBJEXT) network/RequestDecoder.$(OBJEXT) \
+	network/ResponseEncoder.$(OBJEXT) \
+	network/protocol/v2/NRPEV2AbstractPacket.$(OBJEXT) \
+	network/protocol/v3/NRPEV3AbstractPacket.$(OBJEXT) \
 	network/decoders/v2/V2PacketDecoder.$(OBJEXT) \
 	network/decoders/v3/V3PacketDecoder.$(OBJEXT) \
-	network/protocol/v2/NRPEV2AbstractPacket.$(OBJEXT) \
-	network/protocol/v2/NRPEV2Request.$(OBJEXT) \
-	network/protocol/v3/NRPEV3AbstractPacket.$(OBJEXT)
+	network/encoders/v2/V2PacketEncoder.$(OBJEXT) \
+	network/encoders/v3/V3PacketEncoder.$(OBJEXT)
 nrpe___OBJECTS = $(am_nrpe___OBJECTS)
 nrpe___LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -126,10 +128,12 @@ am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = ./$(DEPDIR)/ServerHandler.Po \
 	./$(DEPDIR)/ServerListener.Po ./$(DEPDIR)/main.Po \
 	network/$(DEPDIR)/RequestDecoder.Po \
+	network/$(DEPDIR)/ResponseEncoder.Po \
 	network/decoders/v2/$(DEPDIR)/V2PacketDecoder.Po \
 	network/decoders/v3/$(DEPDIR)/V3PacketDecoder.Po \
+	network/encoders/v2/$(DEPDIR)/V2PacketEncoder.Po \
+	network/encoders/v3/$(DEPDIR)/V3PacketEncoder.Po \
 	network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po \
-	network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po \
 	network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -279,11 +283,14 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = subdir-objects
-nrpe___SOURCES = main.cpp ServerHandler.cpp ServerListener.cpp network/RequestDecoder.cpp \
-	network/decoders/v2/V2PacketDecoder.cpp network/decoders/v3/V3PacketDecoder.cpp \
+nrpe___SOURCES = main.cpp ServerHandler.cpp ServerListener.cpp \
+	network/RequestDecoder.cpp \
+	network/ResponseEncoder.cpp \
 	network/protocol/Packet.hpp \
-	network/protocol/v2/NRPEV2AbstractPacket.cpp network/protocol/v2/NRPEV2Request.cpp \
-	network/protocol/v3/NRPEV3AbstractPacket.cpp network/protocol/v2/NRPEV3Request.hpp
+	network/protocol/v2/NRPEV2AbstractPacket.cpp network/protocol/v2/NRPEV2Request.hpp network/protocol/v2/NRPEV2Response.hpp \
+	network/protocol/v3/NRPEV3AbstractPacket.cpp network/protocol/v3/NRPEV3Request.hpp network/protocol/v3/NRPEV3Response.hpp \
+	network/decoders/v2/V2PacketDecoder.cpp network/decoders/v3/V3PacketDecoder.cpp \
+	network/encoders/v2/V2PacketEncoder.cpp network/encoders/v3/V3PacketEncoder.cpp
 
 all: all-am
 
@@ -368,6 +375,26 @@ network/$(DEPDIR)/$(am__dirstamp):
 	@: > network/$(DEPDIR)/$(am__dirstamp)
 network/RequestDecoder.$(OBJEXT): network/$(am__dirstamp) \
 	network/$(DEPDIR)/$(am__dirstamp)
+network/ResponseEncoder.$(OBJEXT): network/$(am__dirstamp) \
+	network/$(DEPDIR)/$(am__dirstamp)
+network/protocol/v2/$(am__dirstamp):
+	@$(MKDIR_P) network/protocol/v2
+	@: > network/protocol/v2/$(am__dirstamp)
+network/protocol/v2/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) network/protocol/v2/$(DEPDIR)
+	@: > network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
+network/protocol/v2/NRPEV2AbstractPacket.$(OBJEXT):  \
+	network/protocol/v2/$(am__dirstamp) \
+	network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
+network/protocol/v3/$(am__dirstamp):
+	@$(MKDIR_P) network/protocol/v3
+	@: > network/protocol/v3/$(am__dirstamp)
+network/protocol/v3/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) network/protocol/v3/$(DEPDIR)
+	@: > network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
+network/protocol/v3/NRPEV3AbstractPacket.$(OBJEXT):  \
+	network/protocol/v3/$(am__dirstamp) \
+	network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
 network/decoders/v2/$(am__dirstamp):
 	@$(MKDIR_P) network/decoders/v2
 	@: > network/decoders/v2/$(am__dirstamp)
@@ -386,27 +413,24 @@ network/decoders/v3/$(DEPDIR)/$(am__dirstamp):
 network/decoders/v3/V3PacketDecoder.$(OBJEXT):  \
 	network/decoders/v3/$(am__dirstamp) \
 	network/decoders/v3/$(DEPDIR)/$(am__dirstamp)
-network/protocol/v2/$(am__dirstamp):
-	@$(MKDIR_P) network/protocol/v2
-	@: > network/protocol/v2/$(am__dirstamp)
-network/protocol/v2/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) network/protocol/v2/$(DEPDIR)
-	@: > network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
-network/protocol/v2/NRPEV2AbstractPacket.$(OBJEXT):  \
-	network/protocol/v2/$(am__dirstamp) \
-	network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
-network/protocol/v2/NRPEV2Request.$(OBJEXT):  \
-	network/protocol/v2/$(am__dirstamp) \
-	network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
-network/protocol/v3/$(am__dirstamp):
-	@$(MKDIR_P) network/protocol/v3
-	@: > network/protocol/v3/$(am__dirstamp)
-network/protocol/v3/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) network/protocol/v3/$(DEPDIR)
-	@: > network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
-network/protocol/v3/NRPEV3AbstractPacket.$(OBJEXT):  \
-	network/protocol/v3/$(am__dirstamp) \
-	network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
+network/encoders/v2/$(am__dirstamp):
+	@$(MKDIR_P) network/encoders/v2
+	@: > network/encoders/v2/$(am__dirstamp)
+network/encoders/v2/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) network/encoders/v2/$(DEPDIR)
+	@: > network/encoders/v2/$(DEPDIR)/$(am__dirstamp)
+network/encoders/v2/V2PacketEncoder.$(OBJEXT):  \
+	network/encoders/v2/$(am__dirstamp) \
+	network/encoders/v2/$(DEPDIR)/$(am__dirstamp)
+network/encoders/v3/$(am__dirstamp):
+	@$(MKDIR_P) network/encoders/v3
+	@: > network/encoders/v3/$(am__dirstamp)
+network/encoders/v3/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) network/encoders/v3/$(DEPDIR)
+	@: > network/encoders/v3/$(DEPDIR)/$(am__dirstamp)
+network/encoders/v3/V3PacketEncoder.$(OBJEXT):  \
+	network/encoders/v3/$(am__dirstamp) \
+	network/encoders/v3/$(DEPDIR)/$(am__dirstamp)
 
 nrpe++$(EXEEXT): $(nrpe___OBJECTS) $(nrpe___DEPENDENCIES) $(EXTRA_nrpe___DEPENDENCIES) 
 	@rm -f nrpe++$(EXEEXT)
@@ -417,6 +441,8 @@ mostlyclean-compile:
 	-rm -f network/*.$(OBJEXT)
 	-rm -f network/decoders/v2/*.$(OBJEXT)
 	-rm -f network/decoders/v3/*.$(OBJEXT)
+	-rm -f network/encoders/v2/*.$(OBJEXT)
+	-rm -f network/encoders/v3/*.$(OBJEXT)
 	-rm -f network/protocol/v2/*.$(OBJEXT)
 	-rm -f network/protocol/v3/*.$(OBJEXT)
 
@@ -427,10 +453,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ServerListener.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/$(DEPDIR)/RequestDecoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@network/$(DEPDIR)/ResponseEncoder.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/decoders/v2/$(DEPDIR)/V2PacketDecoder.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/decoders/v3/$(DEPDIR)/V3PacketDecoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@network/encoders/v2/$(DEPDIR)/V2PacketEncoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@network/encoders/v3/$(DEPDIR)/V3PacketEncoder.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -579,6 +607,10 @@ distclean-generic:
 	-rm -f network/decoders/v2/$(am__dirstamp)
 	-rm -f network/decoders/v3/$(DEPDIR)/$(am__dirstamp)
 	-rm -f network/decoders/v3/$(am__dirstamp)
+	-rm -f network/encoders/v2/$(DEPDIR)/$(am__dirstamp)
+	-rm -f network/encoders/v2/$(am__dirstamp)
+	-rm -f network/encoders/v3/$(DEPDIR)/$(am__dirstamp)
+	-rm -f network/encoders/v3/$(am__dirstamp)
 	-rm -f network/protocol/v2/$(DEPDIR)/$(am__dirstamp)
 	-rm -f network/protocol/v2/$(am__dirstamp)
 	-rm -f network/protocol/v3/$(DEPDIR)/$(am__dirstamp)
@@ -596,10 +628,12 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/ServerListener.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f network/$(DEPDIR)/RequestDecoder.Po
+	-rm -f network/$(DEPDIR)/ResponseEncoder.Po
 	-rm -f network/decoders/v2/$(DEPDIR)/V2PacketDecoder.Po
 	-rm -f network/decoders/v3/$(DEPDIR)/V3PacketDecoder.Po
+	-rm -f network/encoders/v2/$(DEPDIR)/V2PacketEncoder.Po
+	-rm -f network/encoders/v3/$(DEPDIR)/V3PacketEncoder.Po
 	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po
-	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po
 	-rm -f network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -650,10 +684,12 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/ServerListener.Po
 	-rm -f ./$(DEPDIR)/main.Po
 	-rm -f network/$(DEPDIR)/RequestDecoder.Po
+	-rm -f network/$(DEPDIR)/ResponseEncoder.Po
 	-rm -f network/decoders/v2/$(DEPDIR)/V2PacketDecoder.Po
 	-rm -f network/decoders/v3/$(DEPDIR)/V3PacketDecoder.Po
+	-rm -f network/encoders/v2/$(DEPDIR)/V2PacketEncoder.Po
+	-rm -f network/encoders/v3/$(DEPDIR)/V3PacketEncoder.Po
 	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2AbstractPacket.Po
-	-rm -f network/protocol/v2/$(DEPDIR)/NRPEV2Request.Po
 	-rm -f network/protocol/v3/$(DEPDIR)/NRPEV3AbstractPacket.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
