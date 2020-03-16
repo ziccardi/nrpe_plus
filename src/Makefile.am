@@ -1,4 +1,9 @@
+ACLOCAL_AMFLAGS = -I../m4
 AUTOMAKE_OPTIONS = subdir-objects
+AM_CPPFLAGS = $(BOOST_CPPFLAGS) -pthread
+AM_LDFLAGS = $(BOOST_ASIO_LDFLAGS) $(BOOST_SYSTEM_LDFLAGS) $(PTHREAD_CFLAGS)
+LIBS = $(BOOST_ASIO_LIBS) $(BOOST_SYSTEM_LIBS) $(PTHREAD_LIBS)
+
 bin_PROGRAMS = nrpe++
 
 nrpe___SOURCES = main.cpp ServerHandler.cpp ServerListener.cpp \
@@ -21,5 +26,4 @@ nrpe___SOURCES = main.cpp ServerHandler.cpp ServerListener.cpp \
 	network/protocol/v4/NRPEV4Response.hpp \
 	network/decoders/v4/V4PacketDecoder.cpp \
 	network/encoders/v4/V4PacketEncoder.cpp
-
 

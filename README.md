@@ -1,4 +1,4 @@
-#NRPE++
+# NRPE++
 NRPE++ is a C++ implementation of [NRPE](https://github.com/NagiosEnterprises/nrpe).
 
 The software is in pre-alpha version and, thus supporting NRPE protocol version 2, 3 and 4, it currently just return an _Hello World_ message to
