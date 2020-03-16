@@ -14,15 +14,13 @@ AC_LANG([C++])
 AC_HEADER_STDC
 AC_CHECK_HEADERS([string])
 AC_CHECK_HEADERS([iostream])
-AC_CHECK_HEADERS([boost/asio.hpp], [],
-    [AC_MSG_ERROR(You need the Boost asio libraries.)])
 
 AC_TYPE_SIZE_T
 AC_SUBST([AM_CXXFLAGS])
 AC_SUBST([AM_LDFLAGS])
 
 AC_CONFIG_FILES([Makefile src/Makefile])
-BOOST_REQUIRE
+BOOST_REQUIRE([1.67])
 BOOST_ASIO
 BOOST_SYSTEM
 AC_OUTPUT

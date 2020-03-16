@@ -1455,7 +1455,7 @@ Optional Packages:
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
                           compiler's sysroot if not specified).
-  --with-boost=DIR        prefix of Boost [guess]
+  --with-boost=DIR        prefix of Boost 1.67 [guess]
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -17101,20 +17101,6 @@ fi
 
 done
 
-for ac_header in boost/asio.hpp
-do :
-  ac_fn_cxx_check_header_mongrel "$LINENO" "boost/asio.hpp" "ac_cv_header_boost_asio_hpp" "$ac_includes_default"
-if test "x$ac_cv_header_boost_asio_hpp" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_BOOST_ASIO_HPP 1
-_ACEOF
-
-else
-  as_fn_error $? "You need the Boost asio libraries." "$LINENO" 5
-fi
-
-done
-
 
 ac_fn_cxx_check_type "$LINENO" "size_t" "ac_cv_type_size_t" "$ac_includes_default"
 if test "x$ac_cv_type_size_t" = xyes; then :
@@ -17134,7 +17120,7 @@ ac_config_files="$ac_config_files Makefile src/Makefile"
 
 echo "$as_me: this is boost.m4 serial 32" >&5
 boost_save_IFS=$IFS
-boost_version_req=
+boost_version_req=1.67
 IFS=.
 set x $boost_version_req 0 0 0
 IFS=$boost_save_IFS
