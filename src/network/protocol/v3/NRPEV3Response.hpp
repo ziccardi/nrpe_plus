@@ -9,7 +9,7 @@
 
 class NRPEV3Response : public NRPEV3AbstractPacket {
 public:
-    NRPEV3Response(int16_t resultCode, std::string message)
+    NRPEV3Response(int16_t resultCode, const std::string& message)
             : NRPEV3AbstractPacket(2, 0, resultCode, 0, std::shared_ptr<char>(messageToBuffer(message)), message.length(), std::shared_ptr<char>(new char[3]()), 3) {
         updateCRC();
     }
@@ -18,7 +18,7 @@ public:
     }
 
 private:
-    static char* messageToBuffer(std::string msg) {
+    static char* messageToBuffer(const std::string& msg) {
         char* buf = new char[msg.length() + 1]();
         memcpy(buf, msg.data(), msg.length());
         return buf;
