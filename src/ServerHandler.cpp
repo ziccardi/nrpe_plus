@@ -27,7 +27,7 @@ ServiceHandler::ServiceHandler(boost::asio::io_context& io_context) : _socket(io
 void ServiceHandler::handle() {
     std::string msg("Hello world");
     RequestDecoder decoder(_socket);
-    std::unique_ptr<Packet> pkt(decoder.decode());
+    std::unique_ptr<const Packet> pkt(decoder.decode());
 
     std::cout << pkt->getCommand() << std::endl;
     std::cout << "Valid: " << pkt->validateCRC() << std::endl;

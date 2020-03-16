@@ -5,6 +5,9 @@
 #ifndef NRPE_NRPEV4REQUEST_HPP
 #define NRPE_NRPEV4REQUEST_HPP
 
+#include <utility>
+
+
 #include "NRPEV4AbstractPacket.hpp"
 
 class NRPEV4Request : public NRPEV4AbstractPacket {
@@ -15,7 +18,7 @@ public:
                   u_int32_t bufferLength,
                   std::shared_ptr<char> padding,
                   int16_t paddingLength)
-            : NRPEV4AbstractPacket(1, crc32, 0, alignment, buffer, bufferLength, padding, paddingLength){}
+            : NRPEV4AbstractPacket(1, crc32, 0, alignment, std::move(buffer), bufferLength, std::move(padding), paddingLength){}
 };
 
 #endif //NRPE_NRPEV4REQUEST_HPP

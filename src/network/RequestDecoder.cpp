@@ -13,7 +13,7 @@
 #include "decoders/v3/V3PacketDecoder.hpp"
 #include "decoders/v4/V4PacketDecoder.hpp"
 
-Packet* RequestDecoder::decode() {
+const Packet* RequestDecoder::decode() const{
     boost::asio::streambuf buf;
     
     int16_t version;

@@ -13,7 +13,7 @@ u_int32_t NRPEV3AbstractPacket::crc32() const {
     int16_t type = htons(getPacketType());
     u_int32_t crc32 = 0;
     int16_t result = 0;
-    int16_t alignment = htons(getAlignment());;
+    int16_t alignment = htons(getAlignment());
     u_int32_t bufLen = htonl(getBufferLength());
     crc.process_bytes(&version, sizeof(version));
     crc.process_bytes(&type, sizeof(type));

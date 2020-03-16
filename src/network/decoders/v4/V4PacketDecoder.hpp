@@ -14,8 +14,8 @@ using boost::asio::ip::tcp;
 
 class V4PacketDecoder : public AbstractPacketDecoder {
 public:
-    V4PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
-    void loadPacketFromNetwork();
-    Packet* buildPacket();
+    explicit V4PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
+    void loadPacketFromNetwork() override;
+    const Packet* buildPacket() const override;
 };
 #endif //NRPE_V4PACKETDECODER_HPP

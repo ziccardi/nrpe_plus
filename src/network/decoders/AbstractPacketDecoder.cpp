@@ -4,7 +4,7 @@
 
 #include "AbstractPacketDecoder.hpp"
 
-Packet * AbstractPacketDecoder::decode() {
+const Packet* AbstractPacketDecoder::decode() {
     boost::asio::read(_socket, boost::asio::buffer(&packet_type, sizeof(packet_type)));
     boost::asio::read(_socket, boost::asio::buffer(&crc32, sizeof(crc32)));
     boost::asio::read(_socket, boost::asio::buffer(&resultCode, sizeof(resultCode)));

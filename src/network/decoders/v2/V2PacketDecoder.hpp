@@ -20,9 +20,9 @@ using boost::asio::ip::tcp;
 
 class V2PacketDecoder : public AbstractPacketDecoder {
 public:
-    V2PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
-    void loadPacketFromNetwork();
-    Packet* buildPacket();
+    explicit V2PacketDecoder(tcp::socket& socket) : AbstractPacketDecoder(socket) {}
+    void loadPacketFromNetwork() override;
+    const Packet* buildPacket() const override;
 };
 
 #endif /* V2PacketDecoder_hpp */

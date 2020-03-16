@@ -14,7 +14,7 @@ class V3PacketEncoder {
 private:
     tcp::socket& _socket;
 public:
-    V3PacketEncoder(tcp::socket& socket) : _socket(socket) {}
+    explicit V3PacketEncoder(tcp::socket& socket) : _socket(socket) {}
     void encode(const Packet *pkt) const;
 };
 

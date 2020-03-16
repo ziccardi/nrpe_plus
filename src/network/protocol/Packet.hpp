@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <utility>
 
 class Packet {
 private:
@@ -32,7 +33,7 @@ public:
             std::shared_ptr<char> padding,
             int16_t paddingLength)
         : _version(version), _packetType(type), _crc32(crc32), _resultCode(resultCode),
-          _alignment(alignment), _buffer(buffer), _bufferLength(bufferLength), _padding(padding),
+          _alignment(alignment), _buffer(std::move(buffer)), _bufferLength(bufferLength), _padding(std::move(padding)),
           _paddingLength(paddingLength)
     { }
     virtual ~Packet() {}

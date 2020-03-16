@@ -15,7 +15,7 @@ void ServerListener::start_accept() {
     acceptor.async_accept(new_connection->socket(), boost::bind(&ServerListener::handle_accept, this, new_connection, boost::asio::placeholders::error));
 }
 
-void ServerListener::handle_accept(ServiceHandler::pointer new_connection, const boost::system::error_code& error) {
+void ServerListener::handle_accept(const ServiceHandler::pointer& new_connection, const boost::system::error_code& error) {
   if (!error) {
     new_connection->handle();
   }

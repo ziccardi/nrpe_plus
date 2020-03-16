@@ -21,7 +21,7 @@ public:
     explicit RequestDecoder(tcp::socket& socket) : _socket(socket) {
     }
     
-    Packet* decode();
+    const Packet* decode() const;
 };
 
 #endif /* RequestDecoder_hpp */

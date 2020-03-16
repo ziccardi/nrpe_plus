@@ -25,10 +25,10 @@ protected:
 protected:
     tcp::socket& getSocket() { return _socket; }
     virtual void loadPacketFromNetwork() = 0;
-    virtual Packet* buildPacket() = 0;
+    virtual const Packet* buildPacket() const = 0;
 public:
-    AbstractPacketDecoder(tcp::socket& socket) : _socket(socket) {}
-    Packet* decode();
+    explicit AbstractPacketDecoder(tcp::socket& socket) : _socket(socket) {}
+    const Packet* decode();
 };
 
 

@@ -33,7 +33,7 @@ public:
     }
     
 private:
-    ServiceHandler(boost::asio::io_context& io_context);
+    explicit ServiceHandler(boost::asio::io_context& io_context);
     void handle_write(const boost::system::error_code& /*error*/, size_t /*bytes_transferred*/);
 };
 

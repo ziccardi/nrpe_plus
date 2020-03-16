@@ -18,6 +18,6 @@ void V2PacketDecoder::loadPacketFromNetwork() {
     boost::asio::read(getSocket(), boost::asio::buffer(this->padding.get(), 2));
 }
 
-Packet * V2PacketDecoder::buildPacket() {
+const Packet* V2PacketDecoder::buildPacket() const {
     return new NRPEV2Request(this->crc32, this->resultCode, this->buffer, this->padding);
 }

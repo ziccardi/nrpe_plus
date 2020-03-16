@@ -28,7 +28,7 @@ void V3PacketDecoder::loadPacketFromNetwork() {
     boost::asio::read(getSocket(), boost::asio::buffer(this->padding.get(), this->paddingLength));
 }
 
-Packet * V3PacketDecoder::buildPacket() {
+const Packet * V3PacketDecoder::buildPacket() const{
     return new NRPEV3Request(
             this->crc32,
             this->alignment,

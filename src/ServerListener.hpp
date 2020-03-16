@@ -25,13 +25,13 @@ private:
     tcp::acceptor acceptor;
     
 public:
-    ServerListener(boost::asio::io_context& io_context) : io_context(io_context), acceptor(io_context, tcp::endpoint(tcp::v4(), 13)) {
+    explicit ServerListener(boost::asio::io_context& io_context) : io_context(io_context), acceptor(io_context, tcp::endpoint(tcp::v4(), 13)) {
       start_accept();
     }
 
 private:
     void start_accept();
-    void handle_accept(ServiceHandler::pointer new_connection, const boost::system::error_code& error);
+    void handle_accept(const ServiceHandler::pointer& new_connection, const boost::system::error_code& error);
 };
 
 
