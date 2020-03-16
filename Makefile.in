@@ -167,8 +167,7 @@ am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(top_srcdir)/build-aux/missing COPYING INSTALL \
 	build-aux/compile build-aux/config.guess build-aux/config.sub \
 	build-aux/depcomp build-aux/install-sh build-aux/ltmain.sh \
-	build-aux/missing compile config.guess config.sub depcomp \
-	install-sh missing
+	build-aux/missing compile depcomp install-sh missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -250,7 +249,6 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 GREP = @GREP@
-HAVE_CXX11 = @HAVE_CXX11@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -282,9 +280,6 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-PTHREAD_CC = @PTHREAD_CC@
-PTHREAD_CFLAGS = @PTHREAD_CFLAGS@
-PTHREAD_LIBS = @PTHREAD_LIBS@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -304,7 +299,6 @@ am__leading_dot = @am__leading_dot@
 am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
-ax_pthread_config = @ax_pthread_config@
 bindir = @bindir@
 build = @build@
 build_alias = @build_alias@
@@ -337,7 +331,6 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
-runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
