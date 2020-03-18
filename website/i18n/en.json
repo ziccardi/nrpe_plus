@@ -23,7 +23,8 @@
       }
     },
     "links": {
-      "Home": "Home"
+      "Home": "Home",
+      "GitHUB": "GitHUB"
     },
     "categories": {
       "Docusaurus": "Docusaurus",

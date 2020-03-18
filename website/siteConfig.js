@@ -38,7 +38,8 @@ const siteConfig = {
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
-    {href: 'https://ziccardi.github.io', label: 'Home' }
+    {href: 'https://ziccardi.github.io', label: 'Home' },
+    {href: 'https://github.com/ziccardi/nrpe_plus', label: 'GitHUB' }
     // {doc: 'doc1', label: 'Docs'},
     // {doc: 'doc4', label: 'API'},
     // {page: 'help', label: 'Help'},
